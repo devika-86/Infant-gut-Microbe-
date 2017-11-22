@@ -1,0 +1,21 @@
+# Program for Biomass Precursor Check 
+#Input: model
+
+model=load('Bif_PRL_New.mat');
+model= model.Bif_PRl_New;
+model.lb(299)=0;
+model.lb(922)=-10;
+
+BM_comp=find(model.S(:,1075)<0);
+
+k=1;
+m=1;
+
+[model_New, Rxn_Added]=addDemandReaction(model,model.mets(BM_comp));
+Rxn_Added=Rxn_Added.';
+
+for i=1:length(BM_comp)
+model_New.c = zeros(length(model_New.c),1);                            
+model_New.c(strmatch(Rxn_Added{i},model_New.rxns)) = 1;  
+DM_FBA_Soln(i)=optimizeCbModel(model_New,'max');
+end
