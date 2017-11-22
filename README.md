@@ -1,2 +1,2 @@
-# Infant-gut-Microbe-
+# Infant-gut-Microbe
 Bifidobacterium Spp.
